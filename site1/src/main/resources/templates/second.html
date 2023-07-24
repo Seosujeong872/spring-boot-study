@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 리스트</title>
+</head>
+<body>
+  <h1>게시글 리스트</h1>
+    <div th:each=" dto: ${resSecondDTOList}">
+        <ul >
+            <li>제목 : <span th:text="${dto.title}"></span> </li>
+            <li>내용 : <span th:text="${dto.content}"></span></li>
+            <li>글쓴이 번호 : <span th:text="${dto.userIdx}"></span></li>
+       </ul>  
+       <hr>
+    </div>
+    
+</body>
+</html>

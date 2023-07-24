@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .x-button {
+            background-color: whitesmoke;
+            color: red;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" placeholder="새 지역">
+        <button>추가</button>
+    </div>
+    <div>
+        <ul>
+            <li th:each="dto : ${resMainDTOList}">
+                <span th:text="${dto.regionsName}"></span>
+                <span class="x-button">X</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

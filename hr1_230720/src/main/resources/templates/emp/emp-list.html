@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .card{
+            margin: 1px;
+            padding: 10px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: black;
+            width: 400px;
+            cursor: pointer;
+        }
+
+
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>직원 리스트</h1>
+    <div>
+        <input id="searchValue" type="text" placeholder="firstName을 입력하세요">
+        <button id="searchButton">검색</button>
+    </div>
+    <div>
+        <div class="card" th:onclick="goDetail([[${dto.employeeId}]])" th:each="dto : ${empTableDTOList}">
+            <div>
+                <span>직원번호:</span>
+                <span th:text="${dto.employeeId}"></span>
+            </div>
+            <div>
+                <span>직원이름:</span>
+                <span th:text="${dto.firstName}"></span>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        // 페이지 이동
+        const goDetail = (employeeId) => {
+            location.href = "/emp/" + employeeId;
+        }
+
+        document.querySelector("#searchButton").addEventListener("click", () => {
+
+            // alert(document.querySelector("#searchValue").value);
+
+            location.href = "/emp?firstName=" + document.querySelector("#searchValue").value;
+
+        });
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site1</title>
+</head>
+<body>
+    <h1>유저리스트</h1>
+    <ul>
+        <li th:each="dto : ${resMaindtoList}">
+            <span th:text="${dto.id}"></span>
+        </li>
+    </ul>
+    
+</body>
+</html>

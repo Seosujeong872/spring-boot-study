@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .box {
+            border: 1px solid black; /* 테두리 스타일과 두께 설정 */
+            width: 250px; /* 요소의 너비 */
+            height: 80px; /* 요소의 높이 */
+        }
+    </style>
+    <title>직원리스트</title>
+</head>
+<body>
+    <h1>직원 리스트</h1>
+    <div class="box" th:onclick="goDetail([[${dto.employeeId}]])" th:each="dto : ${empTableDTOList}">
+        <div> 직원번호 : <span th:text="${dto.employeeId}"></span></div>
+        <div> 직원이름 : <span th:text="${dto.firstName}"></span></div>
+    </div>
+    <script>
+        // 페이지 이동
+        const goDetail = (employeeId)=>{
+            window.location.href="/emp/"+employeeId;
+        }
+    </script>
+</body>
+</html>

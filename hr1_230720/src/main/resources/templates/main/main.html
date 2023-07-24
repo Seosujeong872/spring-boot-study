@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .x-button {
+        background-color: whitesmoke;
+        color: red;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .update-button {
+        background-color: whitesmoke;
+        color: blue;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <input id="newRegion" type="text" placeholder="새 지역" />
+      <button id="addButton">추가</button>
+    </div>
+    <div>
+      <ul>
+        <li th:each="dto : ${resMainDTOList}">
+          <span th:text="${dto.regionsId}"></span>
+          <span th:text="${dto.regionsName}"></span>
+          <span class="x-button" th:onclick="deleteRegion([[${dto.regionsId}]])">X</span>
+          <span class="update-button" th:onclick="goUpdatePage([[${dto.regionsId}]])">수정</span>
+        </li>
+      </ul>
+    </div>
+    <script>
+
+      const goUpdatePage = (regionsId)=>{
+        location.href="/main/update-page/" + regionsId;
+      }
+
+      const deleteRegion = (regionsId)=>{
+        // alert(regionsId);
+        const check= confirm(`정말 ${regionsId}번 지역을 삭제하시겠습니까?`);
+        if(check){
+          fetch("/api/v1/main/" + regionsId ,{
+          method : "DELETE"
+        })
+          .then((response)=>response.json())
+          .then((result)=>{
+            alert(result.message);
+            if(result.code === 0){
+              location.reload();
+            }
+          });
+        }
+      
+      };
+
+
+      document.querySelector("#addButton").addEventListener("click", () => {
+        const reqInsertMainDTO = {
+          regionsName: document.querySelector("#newRegion").value,
+        };
+
+        fetch("/api/v1/main", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reqInsertMainDTO),
+        })
+          .then((response) => response.json()) // 받은 응답을 JSON으로 파싱합니다.
+          .then((data) => {
+            // 서버에서 보낸 JSON 데이터를 사용합니다.
+            console.log(data);
+            alert(data.message);
+            if(data.code === 0){
+                location.reload();
+            }
+          })
+          .catch((error) => {
+            // 오류 처리
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>

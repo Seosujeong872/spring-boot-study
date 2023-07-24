@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직원 상세</title>
+</head>
+<body>
+    <h1>직원상세</h1>
+    <div>
+        <div th:text="${empDetailDTO.employeeId}">직원번호 : </div>
+        <div th:text="${empDetailDTO.firstName}">직원이름 : </div>
+        <div th:text="${empDetailDTO.lastName}">직원성 : </div>
+        <div th:text="${empDetailDTO.salary}">직원월급 : </div>
+    </div>
+    
+</body>
+</html>
