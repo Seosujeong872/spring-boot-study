@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-
+@ToString
 public class LoginUserDTO {
 
     private User user;
@@ -28,7 +28,7 @@ public class LoginUserDTO {
     @AllArgsConstructor
     @Builder
     @Getter
-    
+    @ToString
     public static class User {
         private Long idx;
         private String id;
