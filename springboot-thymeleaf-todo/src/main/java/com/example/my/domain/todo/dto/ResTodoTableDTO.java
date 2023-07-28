@@ -52,4 +52,9 @@ public class ResTodoTableDTO {
                     .build();
         }
     }
+
+
+    public static Object fromEntity(TodoEntity todoEntity) {
+        return null;
+    }
 }

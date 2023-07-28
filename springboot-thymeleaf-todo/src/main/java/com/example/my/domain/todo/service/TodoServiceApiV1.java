@@ -1,23 +1,27 @@
 package com.example.my.domain.todo.service;
 
-import com.example.my.common.dto.LoginUserDTO;
-import com.example.my.common.dto.ResponseDTO;
-import com.example.my.domain.todo.dto.ReqTodoTableInsertDTO;
-import com.example.my.domain.todo.dto.ReqTodoTableUpdateDoneYnDTO;
-import com.example.my.domain.todo.dto.ResTodoTableDTO;
-import com.example.my.model.todo.entity.TodoEntity;
-import com.example.my.model.todo.repository.TodoRepository;
-import com.example.my.model.user.entity.UserEntity;
-import com.example.my.model.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import com.example.my.common.dto.LoginUserDTO;
+import com.example.my.common.dto.LoginUserDTO.User;
+import com.example.my.common.dto.ResponseDTO;
+import com.example.my.common.exception.BadRequestException;
+import com.example.my.domain.todo.dto.ReqTodoTableInsertDTO;
+import com.example.my.domain.todo.dto.ReqTodoTableUpdateDoneYnDTO;
+import com.example.my.model.todo.entity.TodoEntity;
+import com.example.my.model.todo.repository.TodoRepository;
+import com.example.my.model.user.entity.UserEntity;
+import com.example.my.model.user.repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -27,20 +31,50 @@ public class TodoServiceApiV1 {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
-    public ResponseEntity<?> getTodoTableData(LoginUserDTO loginUserDTO) {
-        // TODO : 리파지토리에서 유저 기본키로 삭제되지 않은 할 일 목록 찾기
-        // TODO : 응답 데이터로 리턴하기 (할 일 목록 조회에 성공하였습니다.)
-        return null;
+    public ResponseEntity<?> getTodoTableData(HttpSession session,LoginUserDTO loginUserDTO) {
+        // 리파지토리에서 유저 기본키로 삭제되지 않은 할 일 목록 찾기
+
+
+
+        List<TodoEntity> todoEntityList = todoRepository.findByUserEntity_IdxAndDeleteDateIsNull(loginUserDTO.getUser().getIdx());
+        
+        //  응답 데이터로 리턴하기 (할 일 목록 조회에 성공하였습니다.)
+      return null;
     }
 
     @Transactional
-    public ResponseEntity<?> insertTodoTableData(ReqTodoTableInsertDTO dto, LoginUserDTO loginUserDTO) {
-        // TODO : 할 일을 입력했는지 확인
-        // TODO : 리파지토리에서 유저 기본키로 삭제되지 않은 유저 찾기
+    public ResponseEntity<?> insertTodoTableData( ReqTodoTableInsertDTO dto,LoginUserDTO loginUserDTO) {
+        //할 일을 입력했는지 확인
+        
+        // 리파지토리에서 유저 기본키로 삭제되지 않은 유저 찾기
+        Optional<UserEntity> userEntityOptional = userRepository.findByIdxAndDeleteDateIsNull(loginUserDTO.getUser().getIdx());
+        if(userEntityOptional.isEmpty()){
+            throw new BadRequestException("로그인해주세요");
+            
+        }
+
+        UserEntity userEntity = userEntityOptional.get();
+
         // TODO : 할 일 엔티티 생성
+        TodoEntity todoEntity = TodoEntity.builder()
+                    .userEntity(userEntity)
+                    .content(dto.getTodo().getContent())
+                    .doneYn('N')
+                    .createDate(LocalDateTime.now())
+                    .build();
+       
         // TODO : 할 일 엔티티 저장
+        todoRepository.save(todoEntity);
         // TODO : 응답 데이터로 리턴하기 (할 일 추가에 성공하였습니다.)
-        return null;
+     
+
+         return  new ResponseEntity<>(
+            ResponseDTO.builder()
+                    .code(0)
+                    .message("할 일 추가에 성공하였습니다.")
+                    .build(),
+            HttpStatus.OK
+        );
     }
 
     @Transactional

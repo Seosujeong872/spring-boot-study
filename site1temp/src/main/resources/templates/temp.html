@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>form Get</h1>
+    <form action="/temp" method="get">
+        <input type="text" name="name">
+        <input type="text" name="age">
+        <button>제출</button>
+    </form>
+        
+    <hr>
+    <h1>form Post</h1>
+    <form action="/temp" method="post">
+        <input type="text" name="name">
+        <input type="text" name="age">
+        <button>제출</button>
+    </form>
+    <hr>
+    <h1>form Post file</h1>
+    <form action="/file" method="post" enctype="multipart/form-data"> 
+        <!--파일 보낼때는multipart/form-data 꼭 세팅-->
+        <input type="file" name="files" multiple>
+        <button>제출</button>
+    </form>
+    
+</body>
+</html>

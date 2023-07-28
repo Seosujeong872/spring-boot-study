@@ -4,6 +4,7 @@ import com.example.my.domain.auth.dto.ReqJoinDTO;
 import com.example.my.domain.auth.dto.ReqLoginDTO;
 import com.example.my.domain.auth.service.AuthServiceApiV1;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,13 @@ public class AuthControllerApiV1 {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody ReqLoginDTO dto, HttpSession session) {
+    public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDTO dto, HttpSession session) {
         // 서비스에서 로그인하기
         return authServiceApiV1.login(dto, session);
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody ReqJoinDTO dto) {
+    public ResponseEntity<?> join(@Valid @RequestBody ReqJoinDTO dto) {
         //서비스에서 회원가입하기
         return authServiceApiV1.join(dto);
     }
