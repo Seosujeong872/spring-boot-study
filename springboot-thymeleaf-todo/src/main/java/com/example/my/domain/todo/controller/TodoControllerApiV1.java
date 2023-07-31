@@ -25,32 +25,28 @@ public class TodoControllerApiV1 {
     private final TodoServiceApiV1 todoServiceApiV1;
 
     @GetMapping
-    public ResponseEntity<?> getTodoTableData(HttpSession session,LoginUserDTO loginUserDTO) {
+    public ResponseEntity<?> getTodoTableData(HttpSession session, LoginUserDTO loginUserDTO) {
         // TODO : 서비스에서 할 일 목록 가져오기
-        return todoServiceApiV1.getTodoTableData(session,loginUserDTO);
+        return todoServiceApiV1.getTodoTableData(session, loginUserDTO);
     }
 
     @PostMapping
     public ResponseEntity<?> insertTodoTableData(
-            @Valid
-            @RequestBody ReqTodoTableInsertDTO dto,
-            HttpSession session,
-            LoginUserDTO loginUserDTO
-    ) {
+            @Valid @RequestBody ReqTodoTableInsertDTO dto,
+            HttpSession session) {
         // TODO : session에 dto가 없으면 BadRequest 처리
-        LoginUserDTO user = (LoginUserDTO) session.getAttribute("dto");
+        LoginUserDTO loginUserDTO = (LoginUserDTO) session.getAttribute("dto");
 
-        System.out.println(user);
+        System.out.println(loginUserDTO);
 
-        if(user==null){
+        if (loginUserDTO == null) {
             return new ResponseEntity<>(
-                 ResponseDTO.builder()
-                 .code(1)
-                 .message("로그인해주세요")
-                 .build(),
-                 HttpStatus.BAD_REQUEST
-            );
-                 
+                    ResponseDTO.builder()
+                            .code(1)
+                            .message("로그인해주세요")
+                            .build(),
+                    HttpStatus.BAD_REQUEST);
+
         }
         // TODO : 서비스에서 할 일 추가하기
         return todoServiceApiV1.insertTodoTableData(dto, loginUserDTO);
@@ -60,8 +56,7 @@ public class TodoControllerApiV1 {
     public ResponseEntity<?> updateTodoTableData(
             @PathVariable Long todoIdx,
             @RequestBody ReqTodoTableUpdateDoneYnDTO dto,
-            HttpSession session
-    ) {
+            HttpSession session) {
         // TODO : 서비스에서 할 일 완료 수정하기
         return null;
     }
@@ -69,11 +64,9 @@ public class TodoControllerApiV1 {
     @DeleteMapping("/{todoIdx}")
     public ResponseEntity<?> deleteTodoTableData(
             @PathVariable Long todoIdx,
-            HttpSession session
-    ) {
+            HttpSession session) {
         // TODO : 서비스에서 할 일 삭제하기
         return null;
     }
-
 
 }
