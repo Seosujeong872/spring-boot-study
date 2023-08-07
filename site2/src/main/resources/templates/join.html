@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <div>
+        <span>아이디</span>
+        <input id="id" type="id">
+    </div>
+    <div>
+        <span>비밀번호</span>
+        <input id="password" type="password">
+    </div>
+    <div>
+        <button onclick="requestJoin()">회원가입</button>
+    </div>
+    <script>
+
+        const requestJoin =  () => {   //자바스크립트에서 화살표 함수는 => / 자바는 ->
+            const idInputTag = document.getElementById("id");
+            const passwordInputTag = document.getElementById("password");
+            
+            if(idInputTag.value == ""){
+                alert("아이디를 입력해주세요.");
+                return ;
+            }
+
+            // 자바스크립트 객체
+            const dto = {
+                user : {
+                    id : idInputTag.value,
+                    password : passwordInputTag.value
+                }
+            }
+
+            // request
+            fetch("/api/v1/auth/join",{
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json" // 꼭 입력해야한다.
+                },
+                body : JSON.stringify(dto) // dto 는 자바스크립트 객체이므로 json으로 바꿔서 보내야한다.
+            })
+
+            // response
+            .then(response => response.text()) // fetch 리턴값이 프로미스라서 then
+            .then(result => {
+                alert(result);
+            });
+        }
+        
+    </script>
+</body>
+</html>

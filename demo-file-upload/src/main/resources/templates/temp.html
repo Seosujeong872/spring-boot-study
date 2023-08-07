@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 20px;
+      }
+
+      .center-cover-back {
+        background-size: cover;
+        background-position: center;
+      }
+
+      .item {
+        height: 200px;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>사진 업로드</h1>
+      <form action="/gallery" method="post" enctype="multipart/form-data">
+        <div><input type="file" name="file" /></div>
+        <div><button type="submit">업로드</button></div>
+      </form>
+    </div>
+    <div>
+      <h1>사진 리스트</h1>
+      <div class="container">
+        <div
+          th:each="gallery : ${dto.galleryList}"
+          class="center-cover-back item"
+          th:style="'background-image: url('+ ${gallery.imgUrl} +');'"
+        ></div>
+      </div>
+    </div>
+    <script>
+      const uploadFile = () => {};
+    </script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">]
+    <style>
+        body{
+            background-color: black;
+        }
+        h1{
+            color: #94A9F4;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            border: solid 1px white;
+        }
+        span{
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            }
+
+        .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        }
+
+        .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        }
+    </style>
+    <title>join</title>
+</head>
+<body>
+    <div>
+        <div><h1>Join</h1></div>
+        <div>
+            <span>아이디</span>
+            <input id="id" type="id">
+        </div>
+        <div>
+            <span>닉네임</span>
+            <input id="nickname" type="text">
+        </div>
+        <div>
+            <span>비밀번호</span>
+            <input id="password" type="password">
+        </div>
+        <div>
+            <span>비밀번호 확인</span>
+            <input id="passwordCheck" type="password">
+        </div>
+        <div>
+            <span>생년월일</span>
+            <input id="birth" type="date">
+        </div>
+        <div>
+            <span>선호장르</span>
+            <button type="button" id="genreButton">선호 장르 선택하기</button>
+            <span id="selectedGenres"> </span>
+            <div id="genreModal" class="modal">
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h3>선호 장르 3개 선택</h3>
+                  <input type="checkbox" id="action" name="genre1" value="액션">
+                  <label for="action">액션</label>
+          
+                  <input type="checkbox" id="comedy" name="genre2" value="코미디">
+                  <label for="comedy">코미디</label>
+
+                  <input type="checkbox" id="romance" name="genre3" value="로맨스">
+                  <label for="romance">로맨스</label>
+          
+                  <input type="checkbox" id="drama" name="genre4" value="드라마">
+                  <label for="drama">드라마</label>
+
+                  <input type="checkbox" id="animation" name="genre5" value="애니메이션">
+                  <label for="animation">애니메이션</label>
+
+                  <input type="checkbox" id="fantasy" name="genre6" value="판타지">
+                  <label for="fantasy">판타지</label>
+          
+                  <button type="button" id="submitGenres">선택 완료</button>
+                </div>
+              </div>
+        </div>
+        <div><button onclick="requestJoin()">회원가입</button></div>
+    </div>
+</body>
+<script>
+    const genreButton = document.getElementById("genreButton");
+    const genreModal = document.getElementById("genreModal");
+    const closeModal = document.getElementsByClassName("close")[0];
+    const submitGenres = document.getElementById("submitGenres");
+
+    genreButton.addEventListener("click", function() {
+    genreModal.style.display = "block";
+    });
+
+    closeModal.addEventListener("click", function() {
+    genreModal.style.display = "none";
+    });
+
+    submitGenres.addEventListener("click", function() {
+    genreModal.style.display = "none";
+    });
+
+
+
+
+    const selectedGenresContainer = document.getElementById("selectedGenres");
+const selectedGenres = [];
+
+submitGenres.addEventListener("click", function() {
+  genreModal.style.display = "none";
+  selectedGenres.length = 0; // 기존에 선택된 장르 초기화
+
+  const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+  checkboxes.forEach(function(checkbox) {
+    selectedGenres.push(checkbox.value);
+  });
+
+  // 선택한 장르를 표시
+  showSelectedGenres();
+});
+
+function showSelectedGenres() {
+  selectedGenresContainer.innerHTML = ""; // 이전에 보여주던 내용 초기화
+  const selectedGenresString = selectedGenres.join(", "); // 장르명들을 콤마로 구분하여 문자열로 만듦
+  const genreElement = document.createElement("p");
+  genreElement.textContent = selectedGenresString;
+  selectedGenresContainer.appendChild(genreElement);
+}
+
+
+
+const requestJoin =() =>{
+    const idInputTag = document.getElementById("id");
+    const nicknameInputTag = document.getElementById("nickname");
+    const passwordInputTag = document.getElementById("password");
+    const passwordCheckInputTag = document.getElementById("passwordCheck");
+    const birthInputTag = document.getElementById("birth");
+    const genreTag = document.getElementById("selectedGenres")
+
+    console.log(genreTag.value);
+
+
+    if(idInputTag.value == ""){
+        alert("아이디를 입력해주세요");
+        return;
+    }
+    if(nicknameInputTag.value==""){
+        alert("닉네임을 입력해주세요");
+        return;
+    }
+    if(passwordInputTag.value==""){
+        alert("비밀번호를 입력해주세요");
+        return;
+    }
+    if(passwordCheckInputTag.value==""){
+        alert("비밀번호 확인을 입력해주세요");
+        return;
+    }
+    if(birthInputTag.value==""){
+        alert("생년월일을 입력해주세요");
+        return;
+    }
+
+    const dto = {
+        user : {
+            id : idInputTag.value,
+            nickname : nicknameInputTag.value,
+            password : passwordInputTag.value,
+            birth : birthInputTag.value,
+            role : "USER"
+        }
+    }
+
+     // request
+    fetch("/api/v1/auth/join",{ //"/api/v1/auth" 는 AuthControllerApiV1의 @RequestMapping("/api/v1/auth")
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json" // 꼭 입력해야한다.
+          },
+          body : JSON.stringify(dto)
+    })
+
+     // response
+     .then(response => response.text())
+     .then(result => {
+        alert(result);
+     });
+}
+
+
+
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>로그인</h1>
+<div >
+    <div>
+        <span>아이디</span>
+        <input id="id" type="id">
+    </div>
+    <div>
+        <span>비밀번호</span>
+        <input id="password" type="password">
+    </div>
+    <div>
+        <button onclick="requestLogin()" >로그인</button>
+    </div>
+</div>
+<script>
+    //로그인함수 만들기
+
+    const requestLogin = () => {
+
+        const idInputTag = document.querySelector("#id"); // querySelector 쓰면 조건에 맞는 애들을 더 쉽게 가져올 수 있다. (getElement보다)
+        const passwordInputTag = document.querySelector("#password");
+        
+        if(idInputTag.value == ""){
+            alert("아이디를 입력해주세요.")
+            return;
+        }
+        if(passwordInputTag.value == ""){
+            alert("비밀번호를 입력해주세요.")
+            return;
+        }
+
+        const dto = {
+            user : {
+                id : idInputTag.value,
+                password : passwordInputTag.value
+            }
+        }
+
+         // request
+         fetch("/api/v1/auth/login",{
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json" // 꼭 입력해야한다.
+                },
+                body : JSON.stringify(dto) // dto 는 자바스크립트 객체이므로 json으로 바꿔서 보내야한다.
+            })
+
+            // response
+            .then(response => response.text()) // fetch 리턴값이 프로미스라서 then
+            .then(result => {
+                alert(result);
+            });
+    }
+
+
+</script>
+</body>
+</html>
