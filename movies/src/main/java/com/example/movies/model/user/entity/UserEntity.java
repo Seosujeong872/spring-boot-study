@@ -1,4 +1,4 @@
-package com.example.movies.model.auth.entity;
+package com.example.movies.model.user.entity;
 
 import java.time.LocalDate;
 

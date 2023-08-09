@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+         body{
+            background-color: black;
+        }
+        h1{
+            color: #94A9F4;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            border: solid 1px white;
+        }
+        span{
+            color: white;
+        }
+    </style>
+    <title>login</title>
+</head>
+<body>
+    <div><h1>Login</h1></div>
+    <div>
+        <span>아이디</span>
+        <input id="id" type="id">
+    </div>
+    <div>
+        <span>비밀번호</span>
+        <input id="password" type="password">
+    </div>
+    <div>
+        <button onclick="requestLogin()">로그인</button>
+    </div>
+    <div>
+        <span>아이디 찾기</span>
+        <span>비밀번호 찾기</span>
+        <span>회원가입</span>
+        <a href="/auth/join">회원가입</a>
+    </div>
+    <div>
+        <button>카카오 로그인</button>
+    </div>
+    <div>
+        <button>네이버 로그인</button>
+    </div>
+</body>
+<script>
+// 로그인 함수 만들기
+    const requestLogin = () => {
+        const idInputTag = document.querySelector("#id");
+        const passwordInputTag = document.querySelector("#password");
+
+        if(idInputTag.value == ""){
+            alert("아이디를 입력해주세요.")
+            return;
+        }
+        if(passwordInputTag == ""){
+            alert("비밀번호를 입력해주세요.")
+            return;
+        }
+
+        const dto = {
+            user : {
+                id : idInputTag.value,
+                password : passwordInputTag.value
+            }
+        }
+
+        // request
+        fetch("/api/v1/auth/login",{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(dto) // dto 는 자바스크립트 객체이므로 json으로 바꿔서 보내야한다.
+
+        })
+        // response
+        .then(response => response.text())
+        .then(result =>{
+            alert(result);
+        });
+
+    }
+
+
+</script>
+</html>

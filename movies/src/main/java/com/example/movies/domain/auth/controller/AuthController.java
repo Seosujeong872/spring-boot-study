@@ -13,4 +13,11 @@ public class AuthController {
         modelAndView.setViewName("auth/join");
         return modelAndView;
     }
+
+    @GetMapping("/auth/login")
+    public ModelAndView login(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("auth/login");
+        return modelAndView;
+    }
 }

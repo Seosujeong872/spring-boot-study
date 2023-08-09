@@ -1,11 +1,11 @@
-package com.example.movies.model.auth.repository;
+package com.example.movies.model.user.repository;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.movies.model.auth.entity.UserEntity;
+import com.example.movies.model.user.entity.UserEntity;
 
 
 
