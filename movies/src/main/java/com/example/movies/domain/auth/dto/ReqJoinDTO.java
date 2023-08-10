@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ReqJoinDTO {
     private User user;
+    private Genre genre;
+    private UserGenre userGenre;
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -25,5 +27,26 @@ public class ReqJoinDTO {
         private LocalDate birth;
         private String role;
         
+        
     }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    public static class Genre{
+        private Long idx;
+        private String genreName;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    public static class UserGenre{
+        private Long idx;
+        private Long userIdx;
+        private Long genreIdx;
+    }
+
 }

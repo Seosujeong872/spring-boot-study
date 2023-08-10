@@ -68,11 +68,12 @@
         </div>
         <div>
             <span>비밀번호</span>
-            <input id="password" type="password">
+            <input id="password" type="password" required oninput="passwordChecking()">
         </div>
         <div>
             <span>비밀번호 확인</span>
-            <input id="passwordCheck" type="password">
+            <input id="passwordCheck" type="password"  required oninput="passwordChecking()">
+            <div id="error-message" style="color: red;"></div>
         </div>
         <div>
             <span>생년월일</span>
@@ -133,7 +134,7 @@
 
 
     const selectedGenresContainer = document.getElementById("selectedGenres");
-const selectedGenres = [];
+    const selectedGenres = [];
 
 submitGenres.addEventListener("click", function() {
   genreModal.style.display = "none";
@@ -189,6 +190,10 @@ const requestJoin =() =>{
         alert("생년월일을 입력해주세요");
         return;
     }
+    if(passwordInputTag.value != passwordCheckInputTag){
+        alert("비밀번호 확인을 다시 해주세요");
+        return;
+    }
 
     const dto = {
         user : {
@@ -216,7 +221,19 @@ const requestJoin =() =>{
      });
 }
 
+// 비밀번호, 비밀번호 확인 체크 함수
 
+const passwordChecking = ()=>{
+
+    var password = document.getElementById("password").value;
+    var passwordCheck = document.getElementById("passwordCheck").value;
+            
+    if (password !== passwordCheck) {
+        document.getElementById("error-message").innerText = "비밀번호가 일치하지 않습니다.";
+    } else {
+        document.getElementById("error-message").innerText = "";
+    }
+}
 
 </script>
 </html>

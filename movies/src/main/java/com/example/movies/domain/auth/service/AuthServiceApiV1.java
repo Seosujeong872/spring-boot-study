@@ -1,5 +1,6 @@
 package com.example.movies.domain.auth.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.movies.domain.auth.dto.ReqJoinDTO;
 import com.example.movies.domain.auth.dto.ReqLoginDTO;
+import com.example.movies.model.genre.repository.GenreRepository;
 import com.example.movies.model.user.entity.UserEntity;
+import com.example.movies.model.user.entity.UserGenreEntity;
+import com.example.movies.model.user.repository.UserGenreRepository;
 import com.example.movies.model.user.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceApiV1 {
 
     private final UserRepository userRepository;
+    private final GenreRepository genreRepository;
+    private final UserGenreRepository userGenreRepository;
 
     @Transactional
     public ResponseEntity<?> join(ReqJoinDTO dto) {
@@ -35,7 +41,8 @@ public class AuthServiceApiV1 {
                 dto.getUser().getPassword() == null ||
                 dto.getUser().getPassword().equals("") ||
                 dto.getUser().getBirth() == null ||
-                dto.getUser().getBirth().equals("")
+                dto.getUser().getBirth().equals("") ||
+                dto.getUserGenre().getGenreIdx() == null
 
         ) {
             return new ResponseEntity<>(
@@ -59,6 +66,18 @@ public class AuthServiceApiV1 {
                     "이미 사용중인 닉네임입니다.",
                     HttpStatus.BAD_REQUEST);
         }
+       
+        // 선호장르 선택 3개 안 했을 때
+        
+        List<UserGenreEntity> userGenreList = userGenreRepository.findByUserIdx(dto.getUserGenre().getIdx());
+        if(userGenreList.size() < 3){
+            return new ResponseEntity<>(
+                "장르를 3개 선택해주세요",
+                HttpStatus.BAD_REQUEST
+            );
+        }
+
+
 
         // 없으면 회원가입 처리
         UserEntity userEntity = UserEntity.builder()
@@ -68,8 +87,9 @@ public class AuthServiceApiV1 {
                 .birth(dto.getUser().getBirth())
                 .role("USER")
                 .build();
-
+                
         userRepository.save(userEntity);
+        
 
         return new ResponseEntity<>(
                 "회원가입에 성공하였습니다.",
