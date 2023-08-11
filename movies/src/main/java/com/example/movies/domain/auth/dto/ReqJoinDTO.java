@@ -1,6 +1,7 @@
 package com.example.movies.domain.auth.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,15 +13,16 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ReqJoinDTO {
     private User user;
-    private Genre genre;
-    private UserGenre userGenre;
+    // private Genre genre;
+    // private UserGenre userGenre;
+    private List<Long> genreIdxList;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @Getter
     public static class User {
-        private Long idx;
+        // private Long idx;
         private String id;
         private String nickname;
         private String password;
@@ -36,17 +38,17 @@ public class ReqJoinDTO {
     @Getter
     public static class Genre{
         private Long idx;
-        private String genreName;
+        // private String genreName;
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    public static class UserGenre{
-        private Long idx;
-        private Long userIdx;
-        private Long genreIdx;
-    }
+    // @NoArgsConstructor
+    // @AllArgsConstructor
+    // @Builder
+    // @Getter
+    // public static class UserGenre{
+    //     private Long idx;
+    //     private Long userIdx;
+    //     private Long genreIdx;
+    // }
 
 }

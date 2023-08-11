@@ -87,7 +87,13 @@
                 <div class="modal-content">
                   <span class="close">&times;</span>
                   <h3>선호 장르 3개 선택</h3>
-                  <input type="checkbox" id="action" name="genre1" value="액션">
+
+                  <!-- <label for="action" th:each="genre : ${dto.genreList}">
+                    <input type="checkbox" id="action" name="genre1" th:value="${genre.idx}">
+                    [[${genre.name}]]
+                </label> -->
+
+                  <input type="checkbox" id="action" th:name="${'genre' + genre.idx}" value="액션">
                   <label for="action">액션</label>
           
                   <input type="checkbox" id="comedy" name="genre2" value="코미디">
@@ -141,9 +147,11 @@ submitGenres.addEventListener("click", function() {
   selectedGenres.length = 0; // 기존에 선택된 장르 초기화
 
   const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+//   const checkboxes = document.querySelectorAll("input[name*=genre]:checked");
   checkboxes.forEach(function(checkbox) {
     selectedGenres.push(checkbox.value);
   });
+  
 
   // 선택한 장르를 표시
   showSelectedGenres();

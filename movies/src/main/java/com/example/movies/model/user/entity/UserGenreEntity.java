@@ -30,9 +30,9 @@ public class UserGenreEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_idx", referencedColumnName = "idx", nullable = false)
-    private UserEntity user;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "genre_idx", referencedColumnName = "idx", nullable = false)
-    private GenreEntity genre;
+    private GenreEntity genreEntity;
 }
