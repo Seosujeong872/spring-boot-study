@@ -1,99 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">]
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    ]
     <style>
-        body{
-            background-color: black;
-        }
-        h1{
-            color: #94A9F4;
-        }
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        div{
-            border: solid 1px white;
-        }
-        span{
-            color: white;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            }
+      body {
+        background-color: black;
+      }
+      h1 {
+        color: #94a9f4;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        border: solid 1px white;
+      }
+      span {
+        color: white;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
 
-        .modal-content {
+      .modal-content {
         background-color: #fefefe;
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
         width: 60%;
-        }
+      }
 
-        .close {
+      .close {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
-        }
+      }
 
-        .close:hover,
-        .close:focus {
+      .close:hover,
+      .close:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
-        }
+      }
     </style>
     <title>join</title>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-        <div><h1>Join</h1></div>
-        <div>
-            <span>아이디</span>
-            <input id="id" type="id">
-        </div>
-        <div>
-            <span>닉네임</span>
-            <input id="nickname" type="text">
-        </div>
-        <div>
-            <span>비밀번호</span>
-            <input id="password" type="password" required oninput="passwordChecking()">
-        </div>
-        <div>
-            <span>비밀번호 확인</span>
-            <input id="passwordCheck" type="password"  required oninput="passwordChecking()">
-            <div id="error-message" style="color: red;"></div>
-        </div>
-        <div>
-            <span>생년월일</span>
-            <input id="birth" type="date">
-        </div>
-        <div>
-            <span>선호장르</span>
-            <button type="button" id="genreButton">선호 장르 선택하기</button>
-            <span id="selectedGenres"> </span>
-            <div id="genreModal" class="modal">
-                <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h3>선호 장르 3개 선택</h3>
+      <div><h1>Join</h1></div>
+      <div>
+        <span>아이디</span>
+        <input id="id" type="id" />
+      </div>
+      <div>
+        <span>닉네임</span>
+        <input id="nickname" type="text" />
+      </div>
+      <div>
+        <span>비밀번호</span>
+        <input
+          id="password"
+          type="password"
+          required
+          oninput="passwordChecking()"
+        />
+      </div>
+      <div>
+        <span>비밀번호 확인</span>
+        <input
+          id="passwordCheck"
+          type="password"
+          required
+          oninput="passwordChecking()"
+        />
+        <div id="error-message" style="color: red"></div>
+      </div>
+      <div>
+        <span>생년월일</span>
+        <input id="birth" type="date" />
+      </div>
+      <div>
+        <span>선호장르</span>
+        <button type="button" id="genreButton">선호 장르 선택하기</button>
+        <span id="selectedGenres"> </span>
+        <div id="genreModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>선호 장르 3개 선택</h3>
 
-                  <!-- <label for="action" th:each="genre : ${dto.genreList}">
-                    <input type="checkbox" id="action" name="genre1" th:value="${genre.idx}">
-                    [[${genre.name}]]
-                </label> -->
+            <label th:each="genre : ${dto.genreList}">
+              <input
+                type="checkbox"
+                th:id="${'genre' + genre.idx}"
+                th:name="${'genre' + genre.idx}"
+                th:value="${genre.idx}"
+                th:data-genre-name="${genre.genreName}"
+              />
+              [[${genre.genreName}]]
+            </label>
 
-                  <input type="checkbox" id="action" th:name="${'genre' + genre.idx}" value="액션">
+            <!-- <input type="checkbox" id="action" th:name="${'genre' + genre.idx}" value="액션">
                   <label for="action">액션</label>
           
                   <input type="checkbox" id="comedy" name="genre2" value="코미디">
@@ -109,139 +126,150 @@
                   <label for="animation">애니메이션</label>
 
                   <input type="checkbox" id="fantasy" name="genre6" value="판타지">
-                  <label for="fantasy">판타지</label>
-          
-                  <button type="button" id="submitGenres">선택 완료</button>
-                </div>
-              </div>
+                  <label for="fantasy">판타지</label> -->
+
+            <button type="button" id="submitGenres">선택 완료</button>
+          </div>
         </div>
-        <div><button onclick="requestJoin()">회원가입</button></div>
+      </div>
+      <div><button onclick="requestJoin()">회원가입</button></div>
     </div>
-</body>
-<script>
+  </body>
+  <script>
     const genreButton = document.getElementById("genreButton");
     const genreModal = document.getElementById("genreModal");
     const closeModal = document.getElementsByClassName("close")[0];
     const submitGenres = document.getElementById("submitGenres");
 
-    genreButton.addEventListener("click", function() {
-    genreModal.style.display = "block";
+    genreButton.addEventListener("click", function () {
+      genreModal.style.display = "block";
     });
 
-    closeModal.addEventListener("click", function() {
-    genreModal.style.display = "none";
+    closeModal.addEventListener("click", function () {
+      genreModal.style.display = "none";
     });
 
-    submitGenres.addEventListener("click", function() {
-    genreModal.style.display = "none";
+    submitGenres.addEventListener("click", function () {
+      // 체크된 체크박스 리스트 가져오기
+      const checkboxes = document.querySelectorAll(
+        "input[type=checkbox]:checked"
+      );
+
+      // 체크박스 리스트 길이 확인하기
+      if (checkboxes.length !== 3) {
+        alert("장르를 3개 선택해주세요");
+        return;
+      }
+
+      const selectedGenreNames = [];
+
+      genreModal.style.display = "none";
+
+      //   const checkboxes = document.querySelectorAll("input[name*=genre]:checked");
+      checkboxes.forEach(function (checkbox) {
+        selectedGenreNames.push(checkbox.getAttribute("data-genre-name"));
+      });
+
+      // 선택한 장르를 표시
+      showSelectedGenres(selectedGenreNames);
     });
 
+    function showSelectedGenres(selectedGenreNames) {
+      const selectedGenresContainer = document.getElementById("selectedGenres");
 
+      selectedGenresContainer.innerHTML = ""; // 이전에 보여주던 내용 초기화
+      const selectedGenresString = selectedGenreNames.join(", "); // 장르명들을 콤마로 구분하여 문자열로 만듦
+      const genreElement = document.createElement("p");
 
+      genreElement.textContent = selectedGenresString;
+      selectedGenresContainer.appendChild(genreElement);
+    }
 
-    const selectedGenresContainer = document.getElementById("selectedGenres");
-    const selectedGenres = [];
+    // 회원가입 함수
+    const requestJoin = () => {
+      const idInputTag = document.getElementById("id");
+      const nicknameInputTag = document.getElementById("nickname");
+      const passwordInputTag = document.getElementById("password");
+      const passwordCheckInputTag = document.getElementById("passwordCheck");
+      const birthInputTag = document.getElementById("birth");
+      //   const genreTag = document.getElementById("selectedGenres");
 
-submitGenres.addEventListener("click", function() {
-  genreModal.style.display = "none";
-  selectedGenres.length = 0; // 기존에 선택된 장르 초기화
+      const checkboxes = document.querySelectorAll(
+        "input[type=checkbox]:checked"
+      );
 
-  const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
-//   const checkboxes = document.querySelectorAll("input[name*=genre]:checked");
-  checkboxes.forEach(function(checkbox) {
-    selectedGenres.push(checkbox.value);
-  });
-  
+      const genreIdxList = [];
 
-  // 선택한 장르를 표시
-  showSelectedGenres();
-});
+      checkboxes.forEach((checkbox) => {
+        genreIdxList.push(Number(checkbox.value));
+      });
 
-function showSelectedGenres() {
-  selectedGenresContainer.innerHTML = ""; // 이전에 보여주던 내용 초기화
-  const selectedGenresString = selectedGenres.join(", "); // 장르명들을 콤마로 구분하여 문자열로 만듦
-  const genreElement = document.createElement("p");
-  genreElement.textContent = selectedGenresString;
-  selectedGenresContainer.appendChild(genreElement);
-}
+      console.log(genreIdxList);
 
-
-// 회원가입 함수 
-const requestJoin =() =>{
-    const idInputTag = document.getElementById("id");
-    const nicknameInputTag = document.getElementById("nickname");
-    const passwordInputTag = document.getElementById("password");
-    const passwordCheckInputTag = document.getElementById("passwordCheck");
-    const birthInputTag = document.getElementById("birth");
-    const genreTag = document.getElementById("selectedGenres")
-
-    console.log(genreTag.value);
-
-
-    if(idInputTag.value == ""){
+      if (idInputTag.value == "") {
         alert("아이디를 입력해주세요");
         return;
-    }
-    if(nicknameInputTag.value==""){
+      }
+      if (nicknameInputTag.value == "") {
         alert("닉네임을 입력해주세요");
         return;
-    }
-    if(passwordInputTag.value==""){
+      }
+      if (passwordInputTag.value == "") {
         alert("비밀번호를 입력해주세요");
         return;
-    }
-    if(passwordCheckInputTag.value==""){
+      }
+      if (passwordCheckInputTag.value == "") {
         alert("비밀번호 확인을 입력해주세요");
         return;
-    }
-    if(birthInputTag.value==""){
+      }
+      if (birthInputTag.value == "") {
         alert("생년월일을 입력해주세요");
         return;
-    }
-    if(passwordInputTag.value != passwordCheckInputTag){
+      }
+      if (passwordInputTag.value !== passwordCheckInputTag.value) {
         alert("비밀번호 확인을 다시 해주세요");
         return;
-    }
+      }
 
-    const dto = {
-        user : {
-            id : idInputTag.value,
-            nickname : nicknameInputTag.value,
-            password : passwordInputTag.value,
-            birth : birthInputTag.value,
-            role : "USER"
-        }
-    }
+      const dto = {
+        user: {
+          id: idInputTag.value,
+          nickname: nicknameInputTag.value,
+          password: passwordInputTag.value,
+          birth: birthInputTag.value,
+          role: "USER",
+        },
+        genreIdxList: genreIdxList,
+      };
 
-     // request
-    fetch("/api/v1/auth/join",{ //"/api/v1/auth" 는 AuthControllerApiV1의 @RequestMapping("/api/v1/auth")
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json" // 꼭 입력해야한다.
-          },
-          body : JSON.stringify(dto)
-    })
+      // request
+      fetch("/api/v1/auth/join", {
+        //"/api/v1/auth" 는 AuthControllerApiV1의 @RequestMapping("/api/v1/auth")
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // 꼭 입력해야한다.
+        },
+        body: JSON.stringify(dto),
+      })
+        // response
+        .then((response) => response.text())
+        .then((result) => {
+          alert(result);
+        });
+    };
 
-     // response
-     .then(response => response.text())
-     .then(result => {
-        alert(result);
-     });
-}
+    // 비밀번호, 비밀번호 확인 체크 함수
 
-// 비밀번호, 비밀번호 확인 체크 함수
+    const passwordChecking = () => {
+      var password = document.getElementById("password").value;
+      var passwordCheck = document.getElementById("passwordCheck").value;
 
-const passwordChecking = ()=>{
-
-    var password = document.getElementById("password").value;
-    var passwordCheck = document.getElementById("passwordCheck").value;
-            
-    if (password !== passwordCheck) {
-        document.getElementById("error-message").innerText = "비밀번호가 일치하지 않습니다.";
-    } else {
+      if (password !== passwordCheck) {
+        document.getElementById("error-message").innerText =
+          "비밀번호가 일치하지 않습니다.";
+      } else {
         document.getElementById("error-message").innerText = "";
-    }
-}
-
-</script>
+      }
+    };
+  </script>
 </html>

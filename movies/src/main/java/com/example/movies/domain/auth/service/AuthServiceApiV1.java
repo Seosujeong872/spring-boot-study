@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.movies.domain.auth.dto.JoinPageDTO;
+import com.example.movies.domain.auth.dto.JoinPageDTO.Genre;
 import com.example.movies.domain.auth.dto.ReqJoinDTO;
 import com.example.movies.domain.auth.dto.ReqLoginDTO;
-import com.example.movies.domain.auth.dto.JoinPageDTO.Genre;
 import com.example.movies.model.genre.entity.GenreEntity;
 import com.example.movies.model.genre.repository.GenreRepository;
 import com.example.movies.model.user.entity.UserEntity;
@@ -22,7 +22,6 @@ import com.example.movies.model.user.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @RequiredArgsConstructor
@@ -34,13 +33,12 @@ public class AuthServiceApiV1 {
 
     @Autowired
     private final GenreRepository genreRepository;
-    
+
+    @Autowired
     private final UserGenreRepository userGenreRepository;
 
     @Transactional
     public ResponseEntity<?> join(ReqJoinDTO dto) {
-
-        
 
         // 회원가입 정보 입력했는지 확인
 
@@ -54,7 +52,7 @@ public class AuthServiceApiV1 {
 
         // 장르idx리스트 반복문
 
-        // 유저장르 테이블에 
+        // 유저장르 테이블에
 
         // 유저장르 엔티티 만들어서
 
@@ -66,7 +64,6 @@ public class AuthServiceApiV1 {
 
         // 2번유저
         // 7번장르
-
 
         // // 회원가입 정보 입력했는지 확인
         if (dto.getUser().getId() == null ||
@@ -82,6 +79,14 @@ public class AuthServiceApiV1 {
         ) {
             return new ResponseEntity<>(
                     "회원정보를 입력해주세요",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        // dto 장르idx리스트의 길이가 3개가 아니면 BAD_REQUEST 리턴하기
+
+        if (dto.getGenreIdxList().size() != 3) {
+            return new ResponseEntity<>(
+                    "장르선택 3개 해주세요",
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -101,19 +106,22 @@ public class AuthServiceApiV1 {
                     "이미 사용중인 닉네임입니다.",
                     HttpStatus.BAD_REQUEST);
         }
-       
-        // 선호장르 선택 3개 안 했을 때
-        
-        // List<UserGenreEntity> userGenreList = userGenreRepository.findByUserEntity_id(dto.getGenreIdxList().)
-        // if(userGenreList.size() < 3){
-        //     return new ResponseEntity<>(
-        //         "장르를 3개 선택해주세요",
-        //         HttpStatus.BAD_REQUEST
-        //     );
+
+        // // // 선호장르 선택 3개 안 했을 때
+
+        // userGenreList = dto.getGenreIdxList()
+        // if (userGenreList.size() <3){
+        // return new ResponseEntity<>(
+        // "장르를 3개 선택해주세요",
+        // HttpStatus.BAD_REQUEST
+        // );
         // }
-
-        
-
+        // if (userGenreList.size() >3){
+        // return new ResponseEntity<>(
+        // "장르는 3개까지 선택할 수 있습니다.",
+        // HttpStatus.BAD_REQUEST
+        // );
+        // }
 
         // 없으면 회원가입 처리
         UserEntity userEntityForSaving = UserEntity.builder()
@@ -123,28 +131,29 @@ public class AuthServiceApiV1 {
                 .birth(dto.getUser().getBirth())
                 .role("USER")
                 .build();
-                
+
         // 회원가입
         UserEntity userEntity = userRepository.save(userEntityForSaving);
 
         // userEntity.getIdx();
- 
+
         // 반복문
         for (Long genreIdx : dto.getGenreIdxList()) {
 
             // 장르 엔티티
-            // Optional<GenreEntity> genreEntityOptional = genreRepository.findByIdx(genreIdx);
+            // Optional<GenreEntity> genreEntityOptional =
+            // genreRepository.findByIdx(genreIdx);
             GenreEntity genreEntity = GenreEntity.builder()
-            .idx(genreIdx)
-            .build();
+                    .idx(genreIdx)
+                    .build();
 
             UserGenreEntity userGenreEntity = UserGenreEntity.builder()
-            .userEntity(userEntity)
-            .genreEntity(genreEntity)
-            .build();
+                    .userEntity(userEntity)
+                    .genreEntity(genreEntity)
+                    .build();
 
             userGenreRepository.save(userGenreEntity);
-            
+
         }
 
         return new ResponseEntity<>(
@@ -153,8 +162,7 @@ public class AuthServiceApiV1 {
 
     }
 
-  
-    public ResponseEntity<?> login( ReqLoginDTO dto, HttpSession session) {
+    public ResponseEntity<?> login(ReqLoginDTO dto, HttpSession session) {
 
         // 아이디 , 비밀번호 입력했는지 확인.
         if (dto.getUser().getId() == null ||
@@ -167,48 +175,44 @@ public class AuthServiceApiV1 {
         }
 
         Optional<UserEntity> userIdOptional = userRepository.findById(dto.getUser().getId());
-        // Optional<UserEntity> userPwOptional = userRepository.findByPassword(dto.getUser().getPassword());
-        
-        if (!userIdOptional.isPresent()){
+        // Optional<UserEntity> userPwOptional =
+        // userRepository.findByPassword(dto.getUser().getPassword());
+
+        if (!userIdOptional.isPresent()) {
             return new ResponseEntity<>(
-                "존재하지 않는 사용자 입니다. 아이디를 다시 입력해주세요.",
-                HttpStatus.BAD_REQUEST
-            );
+                    "존재하지 않는 사용자 입니다. 아이디를 다시 입력해주세요.",
+                    HttpStatus.BAD_REQUEST);
         }
 
         UserEntity userEntity = userIdOptional.get();
-        
-        if(!userEntity.getPassword().equals(dto.getUser().getPassword())){
-            return new ResponseEntity<>(
-                "비밀번호가 일치하지 않습니다.",
-                HttpStatus.BAD_REQUEST
-            );
-        }
-         // 인증완료. 세션에 유저 정보 입력 
-         session.setAttribute("idx", userEntity.getIdx());
-         session.setAttribute("id", userEntity.getId());
-         System.out.println(session);
 
-         return new ResponseEntity<>(
-            "로그인 성공",
-            HttpStatus.OK
-         );
+        if (!userEntity.getPassword().equals(dto.getUser().getPassword())) {
+            return new ResponseEntity<>(
+                    "비밀번호가 일치하지 않습니다.",
+                    HttpStatus.BAD_REQUEST);
+        }
+        // 인증완료. 세션에 유저 정보 입력
+        session.setAttribute("idx", userEntity.getIdx());
+        session.setAttribute("id", userEntity.getId());
+        System.out.println(session);
+
+        return new ResponseEntity<>(
+                "로그인 성공",
+                HttpStatus.OK);
 
     }
 
     // 장르 목록 가져오기
     public JoinPageDTO getAllGenres() {
-        
+
         List<GenreEntity> genreEntityList = genreRepository.findAll();
 
-
         return JoinPageDTO.builder()
-        .genreList(
-            genreEntityList.stream()
-            .map(genreEntity -> Genre.fromEntity(genreEntity))
-            .toList()
-        )
-        .build();
+                .genreList(
+                        genreEntityList.stream()
+                                .map(genreEntity -> Genre.fromEntity(genreEntity))
+                                .toList())
+                .build();
     }
 
 }

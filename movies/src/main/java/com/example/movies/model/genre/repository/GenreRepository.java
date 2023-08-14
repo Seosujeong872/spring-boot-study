@@ -11,4 +11,6 @@ public interface GenreRepository extends JpaRepository<GenreEntity, Long> {
     Optional<GenreEntity> findByIdx(Long idx);
 
     Optional<GenreEntity> findByGenreName(String genreName);
+
+    // List<GenreEntity> findAllOrderByIdx();
 }

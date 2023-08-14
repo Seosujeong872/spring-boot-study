@@ -8,7 +8,9 @@ import com.example.movies.model.user.entity.UserGenreEntity;
 
 public interface UserGenreRepository extends JpaRepository<UserGenreEntity,Long>{
 
-    List<UserGenreEntity> findByUserEntity_idx(Long userIdx);
+    List<UserGenreEntity> findByIdx(Long idx);
+
+  
 
     
 }
