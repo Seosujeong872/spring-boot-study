@@ -33,7 +33,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// 추가
-	implementation 'com.googlecode.json-simple:json-simple'
+	// implementation 'com.googlecode.json-simple:json-simple'
 }
 
 tasks.named('test') {

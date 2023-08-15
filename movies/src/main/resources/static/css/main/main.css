@@ -57,3 +57,11 @@ footer {
     align-items: flex-end;
     padding-bottom: 25px;
 }
+.movieRankList{
+  list-style: none;
+  display: flex;
+  gap: 100px;
+  margin: 0;
+  padding: 0;
+  flex-direction: column
+}

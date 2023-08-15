@@ -1,31 +1,45 @@
 package com.example.movies.domain.main.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.movies.apimodel.kobis.entity.KobisBoxOffice;
+import com.example.movies.apimodel.kobis.entity.KobisBoxOffice.boxOfficeResult.DailyBoxOffice;
+import com.example.movies.apimodel.kobis.repository.KobisReposiory;
 
 @Service
 public class MainServiceApiV1 {
 
-    private static final String API_KEY = "977c21eab7b6f2b3fcc5b70c02191d91";
-    private static final String BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json";
+    @Autowired
+    private KobisReposiory kobisReposiory;
 
-     @Autowired
-    private RestTemplate restTemplate;
+    public ResponseEntity<?> getMovieRankAndTitleList(String targetDate) {
+        KobisBoxOffice kobisBoxOffice = kobisReposiory.getKobisBoxOfficeByTargetDate(targetDate);
 
-     @Autowired
-    private ObjectMapper objectMapper; // ObjectMapper를 주입받습니다.
+        // 순위와 제목 저장할 리스트.
+        List<String> movieRankAndTitleList = new ArrayList<>();
 
-    public String getMovieRanking(String targetDate) {
-        String apiUrl = BASE_URL + "?key=" + API_KEY + "&targetDt=" + targetDate;
+        if (kobisBoxOffice != null) {
+            // DTO에서 박스오피스 순위 데이터를 가져와서 가공.
 
-        String response = restTemplate.getForObject(apiUrl, String.class);
-        
-        return response;
-        
+            List<DailyBoxOffice> dailyBoxOfficeList = kobisBoxOffice.getBoxOfficeResult().getDailyBoxOfficeList();
+
+            for (DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
+                String movieRankAndTitle = "순위: " + dailyBoxOffice.getRank() + ", 제목: " + dailyBoxOffice.getMovieName();
+                movieRankAndTitleList.add(movieRankAndTitle);
+            }
+        }
+
+        return new ResponseEntity<>(
+            movieRankAndTitleList,
+            HttpStatus.OK
+        );
+
     }
 
-    
 }

@@ -1,6 +1,5 @@
 package com.example.movies.domain.auth.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.movies.domain.auth.dto.JoinPageDTO;
-import com.example.movies.domain.auth.dto.JoinPageDTO.Genre;
 import com.example.movies.domain.auth.dto.ReqJoinDTO;
 import com.example.movies.domain.auth.dto.ReqLoginDTO;
 import com.example.movies.model.genre.entity.GenreEntity;
-import com.example.movies.model.genre.repository.GenreRepository;
 import com.example.movies.model.user.entity.UserEntity;
 import com.example.movies.model.user.entity.UserGenreEntity;
 import com.example.movies.model.user.repository.UserGenreRepository;
@@ -30,9 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceApiV1 {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    private final GenreRepository genreRepository;
 
     @Autowired
     private final UserGenreRepository userGenreRepository;
@@ -202,17 +195,6 @@ public class AuthServiceApiV1 {
 
     }
 
-    // 장르 목록 가져오기
-    public JoinPageDTO getAllGenres() {
 
-        List<GenreEntity> genreEntityList = genreRepository.findAll();
-
-        return JoinPageDTO.builder()
-                .genreList(
-                        genreEntityList.stream()
-                                .map(genreEntity -> Genre.fromEntity(genreEntity))
-                                .toList())
-                .build();
-    }
 
 }
