@@ -19,11 +19,17 @@ public class MainController {
     public ModelAndView mainPage(){
         String targetDate = "20230813"; // 예시로 특정 날짜 지정
 
+       
+
         // mainService통해서 해당 날짜의 mainPageDTO 가져오기.
         MainPageDTO mainPageDTO = mainService.getMainPageDTOByTargetDate(targetDate);
 
+        
+
         // ModelAndView 객체 생성.
         ModelAndView modelAndView = new ModelAndView();
+
+
 
         // 가져온 데이터 dto라는 이름으로 modelAndView에 추가.
         modelAndView.addObject("dto", mainPageDTO);

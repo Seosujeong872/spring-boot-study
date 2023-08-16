@@ -39,8 +39,9 @@
         <span>영화순위</span>
         <ul class="movieRankList" >
           <li class="movieRank" th:each="dto : ${dto.movieRankAndTitleList}"  >
-            <span th:text="${dto}"></span>
-            <!-- <span th:text="${dto.substring(dto.indexOf('rank=') +5, dto.indexOf(','))}"></span> -->
+            <span th:text="${dto.rank}"></span>
+            <span th:text="${dto.movieName}"></span>
+            
             
            
           </li>

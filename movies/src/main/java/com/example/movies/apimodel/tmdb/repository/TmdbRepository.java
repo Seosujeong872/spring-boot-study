@@ -22,9 +22,9 @@ public class TmdbRepository {
     // this.restTemplate = restTemplate;
     // }
 
-    public TmdbMovie getCurrentPlayingMoviePosterUrl() {
-        // 현재 상영중인 영화 목록을 가져오는 TMDb API 호출
-        String apiUrl = TMDB_BASE_URL + "/movie/now_playing?api_key=" + TMDB_API_KEY;
+    public TmdbMovie getMovieInfo(String movieName) {
+        // 영화정보 가져오는 TMDb API 호출
+        String apiUrl = TMDB_BASE_URL + "/search/movie?api_key=" + TMDB_API_KEY + "&query=" + movieName ;
 
         // TMDb API 호출 및 응답 처리
         String response = restTemplate.getForObject(apiUrl, String.class);

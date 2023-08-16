@@ -12,8 +12,29 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class MainPageDTO {
-    private List<String> movieRankAndTitleList;
+    
+    private List<MovieRank> movieRankAndTitleList;
+    private List<MoviePoster> moviePosterPathList;
 
-    // private List<String> moviePosterUrlList;
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MovieRank {
+
+        private int rank;
+        private String movieName;
+
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MoviePoster {
+
+        private String posterPath;
+
+    }
 
 }
