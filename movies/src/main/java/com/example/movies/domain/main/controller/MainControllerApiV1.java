@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.movies.domain.main.service.MainService;
 import com.example.movies.domain.main.service.MainServiceApiV1;
 
 @RestController

@@ -16,25 +16,14 @@ import lombok.NoArgsConstructor;
 
 public class TmdbMovie {
 
-    private results results;
+    private List<Result> results;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     @Builder
-    public static class results {
-
-        private List<MovieInfo> results;
-
-        @NoArgsConstructor
-        @AllArgsConstructor
-        @Getter
-        @Builder
-        public static class MovieInfo {
-
-            @JsonProperty("poster_path")
-            private String posterPath;
-        }
-
+    public static class Result {
+        @JsonProperty("poster_path")
+        private String posterPath;
     }
 }

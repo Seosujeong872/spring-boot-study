@@ -186,7 +186,8 @@ public class AuthServiceApiV1 {
         }
         // 인증완료. 세션에 유저 정보 입력
         session.setAttribute("idx", userEntity.getIdx());
-        session.setAttribute("id", userEntity.getId());
+        session.setAttribute("nickname", userEntity.getNickname());
+        session.setAttribute("role", userEntity.getRole());
         System.out.println(session);
 
         return new ResponseEntity<>(

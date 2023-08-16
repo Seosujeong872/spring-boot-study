@@ -1,67 +1,61 @@
 body {
-    background-color: black;
-    margin: 0; /* 기본 마진 초기화 */
-    padding: 0; /* 기본 패딩 초기화 */
-    margin-left: 200px; /* 왼쪽 여백 */
-    margin-right: 200px; /* 오른쪽 여백 */
-    margin-top: 50px;
-  }
-  h1 {
-    color: #94a9f4;
-  }
-  * {
-    padding: 0;
-    margin: 0;
-  }
-  div {
-    border: solid 1px white;
-    
-  }
-  span {
-    color: white;
-  }
+  background-color: black;
+  margin: 0; /* 기본 마진 초기화 */
+  padding: 0; /* 기본 패딩 초기화 */
+  margin-left: 200px; /* 왼쪽 여백 */
+  margin-right: 200px; /* 오른쪽 여백 */
+  margin-top: 50px;
+}
+h1 {
+  color: #94a9f4;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+div {
+  border: solid 1px white;
+}
+span {
+  color: white;
+}
 
-  .header{
-    justify-content: space-between;
-  }
-  .navbar {
-    background-color: #426CD7;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    padding: 10px 20px;
-    color: white;
+.header {
+  justify-content: space-between;
+}
+.navbar {
+  background-color: #426cd7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
 }
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 300px;
-    margin: 0;
-    padding: 0;
-}
-.nav-links li {
-    position: relative;
-}
-
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
-
-
-.loginjoin{
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 25px;
-}
-.movieRankList{
   list-style: none;
   display: flex;
-  gap: 100px;
+  gap: 300px;
   margin: 0;
   padding: 0;
-  flex-direction: column
+}
+.nav-links li {
+  position: relative;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.loginjoin {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 25px;
+}
+
+.movieRankListSlider{
+  list-style: none;
+        display: flex; 
 }

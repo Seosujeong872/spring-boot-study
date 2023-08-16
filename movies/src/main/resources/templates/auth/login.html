@@ -84,6 +84,7 @@
         .then(response => response.text())
         .then(result =>{
             alert(result);
+            window.location.href = '/main'; // 로그인 하면 main 페이지로 이동
         });
 
     }

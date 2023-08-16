@@ -7,6 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.movies.domain.auth.dto.JoinPageDTO;
 import com.example.movies.domain.auth.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -32,10 +34,16 @@ public class AuthController {
         return modelAndView;
     }
 
-    public static void main(String[] args) {
-
-        System.out.println("안녕하세요");
-        System.out.println("반갑습니다");
-
+    // 로그아웃
+    @GetMapping("/auth/logout")
+    public String logout(HttpServletRequest request) {
+        // 세션 무효화
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        // 로그아웃 후 리다이렉트할 페이지
+        return "redirect:/main";
     }
+   
 }

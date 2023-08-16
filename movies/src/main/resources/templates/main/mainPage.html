@@ -5,20 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style></style>
     <title>main</title>
-    <link
-      rel="stylesheet"
-      href="/css/main/main.css"
-    />
+    <link rel="stylesheet" href="/css/main/main.css" />
   </head>
   <body>
     <div class="container">
       <div class="header" style="display: flex; flex-direction: row">
-        <div class="logo"> <img style="width: 350px;" src="/img/movies_logo.png" alt="로고"></div>
-        <div class="loginjoin" >
-            <span>로그인</span>
-            <span style="margin-left: 20px;">회원가입</span>
+        <div class="logo">
+          <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
         </div>
-        
+        <div th:if="${session.idx == null}" class="loginjoin">
+          <span>
+            <a href="/auth/login">로그인</a>
+          </span>
+          <span style="margin-left: 20px">
+            <a href="/auth/join">회원가입</a>
+          </span>
+        </div>
+        <div th:if="${session.idx != null }">
+          <span th:text="${session.nickname + '님 안녕하세요'}"></span>
+          <span th:if="${session.role == 'ADMIN'}">어드민페이지 가기</span>
+
+          <span>
+            <a href="/auth/logout">로그아웃</a>
+          </span>
+        </div>
       </div>
       <div>d</div>
       <div>
@@ -33,28 +43,38 @@
       </div>
       <div>d</div>
       <div class="content_video">
-        <div class="video"><span>예고편영상</span></div>
+        <div class="video"><h1>예고편영상</h1></div>
       </div>
       <div class="content_movie">
-        <span>영화순위</span>
-        <ul class="movieRankList" >
-          <li class="movieRank" th:each="dto : ${dto.movieRankAndTitleList}"  >
-            <span th:text="${dto.rank}"></span>
-            <span th:text="${dto.movieName}"></span>
-            
-            
-           
-          </li>
+        <h1>영화순위</h1>
+        <div class="sliderContainer">
+          <!-- <button class="prevButton">이전</button> -->
 
-        </ul>
+          <ul class="movieRankListSlider">
+            <li
+              class="movieRankSlide"
+              th:each="dto : ${dto.movieRankAndTitleList}"
+            >
+              <img
+                class="movieImage"
+                th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.posterPath}}"
+                alt="Poster"
+                width="200"
+                height="300"
+              />
+              <span th:text="${dto.rank}"></span>
+              <span th:text="${dto.movieName}"></span>
+            </li>
+          </ul>
 
-
+          <!-- <button class="nextButton">다음</button> -->
+        </div>
       </div>
     </div>
 
-
     <footer>
-        <p>&copy; 2023 My Web Page. All rights reserved.</p>
+      <p>&copy; 2023 My Web Page. All rights reserved.</p>
     </footer>
   </body>
+
 </html>
