@@ -1,0 +1,79 @@
+body {
+  background-color: black;
+  margin: 0; /* 기본 마진 초기화 */
+  padding: 0; /* 기본 패딩 초기화 */
+  margin-left: 200px; /* 왼쪽 여백 */
+  margin-right: 200px; /* 오른쪽 여백 */
+  margin-top: 50px;
+}
+h1 {
+  color: #94a9f4;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+div {
+  border: solid 1px white;
+}
+span {
+  color: white;
+}
+
+.header {
+  justify-content: space-between;
+}
+
+.loginjoin {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 25px;
+}
+.navbar {
+  /* background-color: #426cd7; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 300px;
+  margin: 0;
+  padding: 0;
+}
+.nav-links li {
+  position: relative;
+}
+.content1 {
+  display: flex;
+  align-items: center;
+}
+
+.searchbox {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+.movieList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+}
+
+.movieList li {
+  width: 19%; /* 5개의 항목이 가로로 나뉘어지도록 설정 */
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}

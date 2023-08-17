@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>moviePage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/movie/movie.css" />
+  </head>
+  <body>
+    <div class="container" style="padding: 0px;">
+      <div class="header" style="display: flex; flex-direction: row">
+        <div class="logo">
+          <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
+        </div>
+        <div th:if="${session.idx == null}" class="loginjoin">
+          <span>
+            <a href="/auth/login">로그인</a>
+          </span>
+          <span style="margin-left: 20px">
+            <a href="/auth/join">회원가입</a>
+          </span>
+        </div>
+        <div th:if="${session.idx != null }">
+          <span th:text="${session.nickname + '님 안녕하세요'}"></span>
+          <span th:if="${session.role == 'ADMIN'}">어드민페이지 가기</span>
+
+          <span>
+            <a href="/auth/logout">로그아웃</a>
+          </span>
+        </div>
+      </div>
+      <div>d</div>
+      <div>
+        <nav class="navbar">
+          <ul class="nav-links">
+            <li><a href="/main">홈</a></li>
+            <li>랭킹</li>
+            <li><a href="/main/movie">영화</a></li>
+            <li>추천</li>
+          </ul>
+        </nav>
+      </div>
+      <div>d</div>
+      <div class="content1" style="flex-direction: row">
+        <div><h1>전체</h1></div>
+        <div>
+          <label for="movie-genre">Select a movie genre:</label>
+          <select id="movie-genre">
+            <option value="action">Action</option>
+            <option value="adventure">Adventure</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="fantasy">Fantasy</option>
+            <!-- 추가적인 옵션들을 여기에 추가할 수 있습니다 -->
+        </select>
+        </div>
+        <div class="searchbox">
+            <label for="search">Search:</label>
+            <input type="text" id="search" placeholder="Enter your search term">
+        
+            <button id="search-button">Search</button>
+        </div>
+      </div>
+      <div>d</div>
+      <div>
+        <span>영화 넣을 자리 </span>
+        <ul class="movieList">
+            <li th:each=" dto: ${dto.movieList}">
+                <span th:text="${dto.movieName}"></span>
+                <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.poster}}"  alt="Poster"
+                width="200"
+                height="300">
+            </li>
+            
+            
+        </ul>
+
+
+      </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 My Web Page. All rights reserved.</p>
+      </footer>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>

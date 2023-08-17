@@ -3,13 +3,13 @@ package com.example.movies.apimodel.kobis.repository;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.movies.apimodel.kobis.entity.KobisBoxOffice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Service
+@Repository
 public class KobisReposiory {
 
     private static final String API_KEY = "977c21eab7b6f2b3fcc5b70c02191d91";

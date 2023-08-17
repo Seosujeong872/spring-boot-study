@@ -59,3 +59,53 @@ footer {
   list-style: none;
         display: flex; 
 } */
+
+
+a {
+  color: inherit; /* 기본 색상 상속 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.movieSlider {
+  list-style: none;
+  display: flex;
+  /* overflow: hidden; */
+  width: 100%; /* Set container width to 100% */
+  transition: transform 0.5s ease-in-out;
+}
+
+.movieSlide {
+  flex: 0 0 20%; /* Each slide takes 20% of the container's width */
+  margin-right: 10px;
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  /* Hide any content that goes beyond the container */
+  overflow: hidden; 
+  position: relative;
+  width: 100%; /* Set the container width */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.prevButton, .nextButton {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.prevButton {
+  left: 10px;
+}
+
+.nextButton {
+  right: 10px;
+}
+
+.movieImage {
+  max-width: 100%; /* Ensure the image does not exceed its container's width */
+  height: auto; /* Maintain aspect ratio */
+}

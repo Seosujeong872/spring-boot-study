@@ -36,9 +36,8 @@ public class MainServiceApiV1 {
         }
 
         return new ResponseEntity<>(
-            movieRankAndTitleList,
-            HttpStatus.OK
-        );
+                movieRankAndTitleList,
+                HttpStatus.OK);
 
     }
 

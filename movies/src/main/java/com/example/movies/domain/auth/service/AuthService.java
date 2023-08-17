@@ -22,6 +22,7 @@ public class AuthService {
     private final GenreRepository genreRepository;
 
     // 장르 목록 가져오기
+
     public JoinPageDTO getAllGenres() {
 
         List<GenreEntity> genreEntityList = genreRepository.findAll();

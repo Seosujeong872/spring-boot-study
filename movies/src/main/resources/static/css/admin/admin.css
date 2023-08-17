@@ -1,0 +1,29 @@
+body {
+    background-color: black;
+    margin: 0; /* 기본 마진 초기화 */
+    padding: 0; /* 기본 패딩 초기화 */
+    margin-left: 200px; /* 왼쪽 여백 */
+    margin-right: 200px; /* 오른쪽 여백 */
+    margin-top: 50px;
+  }
+  h1 {
+    color: #94a9f4;
+  }
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  div {
+    border: solid 1px white;
+  }
+  span {
+    color: white;
+  }
+  .header {
+    justify-content: space-between;
+  }
+  .loginjoin {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 25px;
+  }

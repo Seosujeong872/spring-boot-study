@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"
+  ></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link
+      href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+  />
+  <link
+      rel="stylesheet"
+      href="/css/todo-table.css"
+  />
+  <title>todoList</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="javascript:void(0)">
+        <span id="userId" th:text="${session.loginUserDTO.user.id}"></span>'s work
+      </a>
+    </div>
+    <button type="button" onclick="logout()" class="btn btn-default navbar-btn navbar-right">logout</button>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="todolist not-done">
+        <h1>TODO LIST</h1>
+        <input
+            id="content"
+            type="text"
+            class="form-control add-todo"
+            placeholder="할일을 입력하고 엔터를 치세요"
+            autofocus
+        />
+        <hr/>
+        <ul id="todoList" class="list-unstyled">
+          <li class="ui-state-default" th:each="todo : ${dto.todoList}">
+            <div class="checkbox">
+              <label>
+                <input
+                    th:onchange="setDoneY([[${todo.idx}]])"
+                    type="checkbox"
+                />
+                <span th:text="${todo.content}"></span>
+              </label>
+            </div>
+          </li>
+        </ul>
+        <div class="todo-footer">
+          <strong>
+            <span id="todoCount" class="count-todos" th:text="${dto.todoList.size()}"></span>
+          </strong>
+          항목 남았음
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="todolist">
+        <h1>DONE LIST</h1>
+        <ul id="doneList" class="list-unstyled">
+          <li th:each="todo : ${dto.doneList}">
+            <div class="checkbox">
+              <label>
+                <input
+                    th:onchange="setDoneN([[${todo.idx}]])"
+                    class="remove-item"
+                    type="checkbox"
+                />
+                <span th:text="${todo.content}"></span>
+              </label>
+              <button
+                  th:onclick="setDelete([[${todo.idx}]])"
+                  class="remove-item btn btn-default btn-xs pull-right"
+              >
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+    const logout = () => {
+        location.replace('/auth/logout');
+    }
+
+</script>
+
+<script>
+    console.log("스타일 참고", "https://bootsnipp.com/snippets/QbN51");
+
+    const init = () => {
+        fetch(`/api/v1/todo`)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 0) {
+
+                    const todoList = result.data.todoList;
+                    const doneList = result.data.doneList;
+
+                    document.querySelector("#todoList").innerHTML = "";
+
+                    for (const todo of todoList) {
+                        document.querySelector("#todoList").insertAdjacentHTML(
+                            "beforeend",
+                            `
+                            <li class="ui-state-default">
+                                <div class="checkbox">
+                                    <label>
+                                        <input
+                                            onchange="setDoneY(${todo.idx})"
+                                            type="checkbox"
+                                        />
+                                        <span>${todo.content}</span>
+                                    </label>
+                                </div>
+                            </li>
+                            `
+                        );
+                    }
+
+                    document.querySelector("#todoCount").innerText = todoList.length;
+
+                    document.querySelector("#doneList").innerHTML = "";
+
+                    for (const todo of doneList) {
+                        document.querySelector("#doneList").insertAdjacentHTML(
+                            "beforeend",
+                            `
+                            <li>
+                                <div class="checkbox">
+                                    <label>
+                                        <input
+                                            onchange="setDoneN(${todo.idx})"
+                                            class="remove-item"
+                                            type="checkbox"
+                                        />
+                                        <span>${todo.content}</span>
+                                    </label>
+                                    <button
+                                        onclick="setDelete(${todo.idx})"
+                                        class="remove-item btn btn-default btn-xs pull-right"
+                                    >
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </li>
+                            `
+                        );
+                    }
+                } else {
+                    console.log(result.message);
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    };
+    init();
+
+    const contentInput = document.querySelector("#content");
+    contentInput.addEventListener("keypress", (e) => {
+        if (e.code !== "Enter") return;
+        if (contentInput.value === "") return;
+
+        const dto = {
+            todo: {
+                content: contentInput.value
+            }
+        };
+
+        fetch(`/api/v1/todo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify(dto),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 0) {
+                    contentInput.value = "";
+                    init();
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    });
+
+
+    const setDoneY = (idx) => {
+
+        const dto = {
+            todo: {
+                doneYn: "Y"
+            }
+        }
+
+        fetch(`/api/v1/todo/` + idx, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify(dto),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 0) {
+                    init();
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    };
+
+    const setDoneN = (idx) => {
+
+        const dto = {
+            todo: {
+                doneYn: "N"
+            }
+        }
+
+        fetch(`/api/v1/todo/` + idx, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify(dto),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 0) {
+                    init();
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    };
+
+    const setDelete = (idx) => {
+        fetch(`/api/v1/todo/` + idx, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 0) {
+                    init();
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    };
+</script>
+</html>
