@@ -51,10 +51,7 @@
           <!-- <button class="prevButton">이전</button> -->
 
           <ul class="movieRankListSlider">
-            <li
-              class="movieRankSlide"
-              th:each="dto : ${dto.movieRankAndTitleList}"
-            >
+            <li th:each="dto : ${dto.movieRankAndTitleList}">
               <img
                 class="movieImage"
                 th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.posterPath}}"
