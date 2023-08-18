@@ -1,35 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>adminUpdate</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/admin/admin.css" />
-    </head>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>adminUpdate</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/admin/admin.css" />
+</head>
+
 <body>
-    <div class="container" style="padding: 0px;">
-        <div class="header" style="display: flex; flex-direction: row ; width: 100%;" >
-            <div class="logo">
-              <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
-            </div>
-            <div th:if="${session.idx == null}" class="loginjoin">
-              <span>
-                <a href="/auth/login">로그인</a>
-              </span>
-              <span style="margin-left: 20px">
-                <a href="/auth/join">회원가입</a>
-              </span>
-            </div>
-            <div th:if="${session.idx != null }">
-              <span th:text="${session.nickname + '님 안녕하세요'}"></span>
-              <span th:if="${session.role == 'ADMIN'}">어드민페이지 가기</span>
-    
-              <span>
-                <a href="/auth/logout">로그아웃</a>
-              </span>
-            </div>
-          </div>
+  <div class="container" style="padding: 0px">
+    <div class="header" style="display: flex; flex-direction: row; width: 100%">
+      <!-- <div class="logo">
+        <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
+      </div> -->
+      <div class="logo">
+      <a href="/main" class="logo">
+        <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
+      </a>
     </div>
+      <div th:if="${session.idx == null}" class="loginjoin">
+        <span>
+          <a href="/auth/login">로그인</a>
+        </span>
+        <span style="margin-left: 20px">
+          <a href="/auth/join">회원가입</a>
+        </span>
+      </div>
+      <div th:if="${session.idx != null }">
+        <span th:text="${session.nickname + '님 안녕하세요'}"></span>
+        <span th:if="${session.role == 'ADMIN'}">어드민페이지 가기</span>
+
+        <span>
+          <a href="/auth/logout">로그아웃</a>
+        </span>
+      </div>
+    </div>
+    <div>d</div>
+    <div>
+      <h1>영화 정보 수정</h1>
+    </div>
+    <div>d</div>
+    <div class="UpdateForm">
+
+      <div class="form-floating ">
+        <input type="text" class="form-control" id="movieName" th:value="${dto.movie.movieName}" placeholder="영화제목">
+        <label for="floatingInput">영화제목</label>
+      </div>
+
+      
+      <div class="form-floating">
+        <input type="text" class="form-control" id="movieDate" th:value="${dto.movie.movieDate}" placeholder="개봉일">
+        <label for="floatingPassword">개봉일</label>
+      </div>
+
+      
+      <div class="form-floating">
+        <input type="text" class="form-control" id="grade" th:value="${dto.movie.grade}" placeholder="등급">
+        <label for="floatingPassword">등급</label>
+      </div>
+
+    
+
+      <div class="form-floating ">
+        <input type="text" class="form-control" id="country" th:value="${dto.movie.country}" placeholder="국가">
+        <label for="floatingInput">국가</label>
+      </div>
+
+      <div class="form-floating ">
+        <input type="text" class="form-control" id="movieTime" th:value="${dto.movie.movieTime}" placeholder="러닝타임">
+        <label for="floatingInput">러닝타임</label>
+      </div>
+
+      <div class="form-floating ">
+        <input type="text" class="form-control" id="poster" th:value="${dto.movie.poster}" placeholder="포스터 주소">
+        <label for="floatingInput">포스터 주소</label>
+      </div>
+
+      <div class="form-floating ">
+        <!-- <input type="text" class="form-control" id="floatingInput" th:value="${dto.movie.summary}" placeholder="영화제목"> -->
+        <textarea class="form-control" id="summary" th:text="${dto.movie.summary}" placeholder="줄거리"></textarea>
+        <label for="floatingInput">줄거리</label>
+      </div>
+      
+    </div>
+    <div>
+      dd
+    </div>
+    <div class="d-flex justify-content-center">
+      <button  type="button" class="btn btn-secondary mr-20" th:onclick = "editMovie([[${dto.movie.idx}]])">수정</button>
+      <button  type="button" class="btn btn-outline-secondary" onclick="cancelBtn()">취소</button>
+    </div>
+  </div>
+  </div>
 </body>
+<script>
+// 수정 버튼 누르면 실행되는 함수 
+function editMovie(idx) {
+        const movieName =document.querySelector("#movieName");
+        const movieDate =document.querySelector("#movieDate");
+        const grade =document.querySelector("#grade");
+        const country =document.querySelector("#country");
+        const movieTime =document.querySelector("#movieTime");
+        const poster =document.querySelector("#poster");
+        const summary =document.querySelector("#summary");
+        
+        const dto = {
+          movie : {
+            idx:idx,
+            movieName: movieName.value,
+            movieDate: movieDate.value,
+            grade: grade.value,
+            country: country.value,
+            movieTime: movieTime.value,
+            poster: poster.value,
+            summary: summary.value,
+          }
+        };
+
+        fetch("/api/v1/admin/update-movie",{
+          method:"PUT",
+          headers: {
+          "Content-Type": "application/json", // 꼭 입력해야한다.
+        },
+        body: JSON.stringify(dto),
+        })
+        .then((response) => response.text())
+        .then((result) => {
+          alert(result);
+          location.replace("/admin");
+        });
+        
+    };
+
+function cancelBtn(){
+  location.replace("/admin");
+}
+
+
+</script>
+
 </html>

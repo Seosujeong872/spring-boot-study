@@ -11,7 +11,9 @@
     <div class="container" style="padding: 0px;">
       <div class="header" style="display: flex; flex-direction: row">
         <div class="logo">
-          <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
+          <a href="/main" class="logo">
+            <img style="width: 350px" src="/img/movies_logo.png" alt="로고" />
+          </a>
         </div>
         <div th:if="${session.idx == null}" class="loginjoin">
           <span>

@@ -55,4 +55,33 @@ public class MovieEntity {
     @OneToMany(mappedBy = "movieEntity")
     private List<MovieGenreEntity> movieGenreEntityList;
 
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public void setMovieDate(String movieDate) {
+        this.movieDate = movieDate;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public void setMovieTime(Integer movieTime) {
+        this.movieTime = movieTime;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+
 }

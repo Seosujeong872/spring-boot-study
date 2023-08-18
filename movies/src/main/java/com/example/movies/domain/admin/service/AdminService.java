@@ -1,12 +1,13 @@
 package com.example.movies.domain.admin.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.movies.domain.admin.dto.ResAdminMovieUpdatePageDTO;
 import com.example.movies.domain.movie.dto.ResMoviePageDTO;
-import com.example.movies.domain.movie.dto.ResMoviePageDTO.Movie;
 import com.example.movies.model.movie.entity.MovieEntity;
 import com.example.movies.model.movie.repository.MovieRepository;
 
@@ -24,9 +25,19 @@ public class AdminService {
         return ResMoviePageDTO.builder()
                 .movieList(
                         movieEntityList.stream()
-                                .map(movieEntity -> Movie.fromEntity(movieEntity))
+                                .map(movieEntity -> ResMoviePageDTO.Movie.fromEntity(movieEntity))
                                 .toList())
                 .build();
 
+    }
+
+    public ResAdminMovieUpdatePageDTO getAdminMovieUpdateData(Long movieIdx){
+
+        Optional<MovieEntity> movieEntityOptional = movieRepository.findByIdx(movieIdx);
+        MovieEntity movieEntity = movieEntityOptional.get();
+
+        return ResAdminMovieUpdatePageDTO.builder()
+        .movie(ResAdminMovieUpdatePageDTO.Movie.fromEntity(movieEntity))
+        .build();
     }
 }

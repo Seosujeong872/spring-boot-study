@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class JoinPageDTO {
+public class ResJoinPageDTO {
     private List<Genre> genreList;
 
     @NoArgsConstructor

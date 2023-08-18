@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.movies.apimodel.tmdb.entity.TmdbMovie;
 import com.example.movies.apimodel.tmdb.repository.TmdbRepository;
+import com.example.movies.domain.admin.dto.ReqAdminMovieUpdateDTO;
 import com.example.movies.model.genre.entity.GenreEntity;
 import com.example.movies.model.genre.repository.GenreRepository;
 import com.example.movies.model.movie.entity.MovieEntity;
@@ -98,10 +99,30 @@ public class AdminServiceApiV1 {
 
     }
 
-    // public void temp(Long movieIdx) {
+    @Transactional
+    public ResponseEntity<?> updateMovie(ReqAdminMovieUpdateDTO dto){
 
-    //     List<MovieEntity> movieEntityList = movieRepository.findAll();
+        // dto의 movie idx로 엔티티 가져오기
+        Optional<MovieEntity> movieEntityOptional = movieRepository.findByIdx(dto.getMovie().getIdx());
+        MovieEntity movieEntity = movieEntityOptional.get();
+        // 엔티티 데이터 set하기
+        movieEntity.setMovieName(dto.getMovie().getMovieName());
+        movieEntity.setCountry(dto.getMovie().getCountry());
+        movieEntity.setGrade(dto.getMovie().getGrade());
+        movieEntity.setMovieDate(dto.getMovie().getMovieDate());
+        movieEntity.setPoster(dto.getMovie().getPoster());
+        movieEntity.setMovieTime(dto.getMovie().getMovieTime());
+        movieEntity.setSummary(dto.getMovie().getSummary());
 
-    // }
+        return new ResponseEntity<>(
+            "수정에 성공했습니다.",
+            HttpStatus.OK
+        );
+
+
+
+    }
+
+
 
 }

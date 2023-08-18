@@ -28,4 +28,13 @@ public class MovieController {
         modelAndView.setViewName("movie/moviePage");
         return modelAndView;
     }
+    
+    @GetMapping("/main/recommend")
+    public ModelAndView Recommend(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("movie/recommend");
+        return modelAndView;
+    }
+    
 }

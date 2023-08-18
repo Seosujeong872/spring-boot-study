@@ -27,3 +27,7 @@ body {
     align-items: flex-end;
     padding-bottom: 25px;
   }
+
+  .form-control {
+    background-color: #94a9f4;
+  }

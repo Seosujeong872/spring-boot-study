@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.movies.domain.auth.dto.JoinPageDTO;
-import com.example.movies.domain.auth.dto.JoinPageDTO.Genre;
+import com.example.movies.domain.auth.dto.ResJoinPageDTO;
+import com.example.movies.domain.auth.dto.ResJoinPageDTO.Genre;
 import com.example.movies.model.genre.entity.GenreEntity;
 import com.example.movies.model.genre.repository.GenreRepository;
 
@@ -23,11 +23,11 @@ public class AuthService {
 
     // 장르 목록 가져오기
 
-    public JoinPageDTO getAllGenres() {
+    public ResJoinPageDTO getAllGenres() {
 
         List<GenreEntity> genreEntityList = genreRepository.findAll();
 
-        return JoinPageDTO.builder()
+        return ResJoinPageDTO.builder()
                 .genreList(
                         genreEntityList.stream()
                                 .map(genreEntity -> Genre.fromEntity(genreEntity))

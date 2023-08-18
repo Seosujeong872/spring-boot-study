@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.movies.domain.auth.dto.JoinPageDTO;
+import com.example.movies.domain.auth.dto.ResJoinPageDTO;
 import com.example.movies.domain.auth.service.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class AuthController {
     public ModelAndView join() {
         ModelAndView modelAndView = new ModelAndView();
         // 서비스에서 데이터 가져오기
-        JoinPageDTO dto = authService.getAllGenres();
+        ResJoinPageDTO dto = authService.getAllGenres();
         modelAndView.addObject("dto", dto);
         modelAndView.setViewName("auth/join");
         return modelAndView;
