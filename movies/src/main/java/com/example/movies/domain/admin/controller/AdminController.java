@@ -22,4 +22,12 @@ public class AdminController {
         modelAndView.setViewName("admin/admin");
         return modelAndView;
     }
+
+    @GetMapping("/admin/Update")
+    public ModelAndView adminUpdate(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("admin/adminUpdate");
+        return modelAndView;
+    }
 }
