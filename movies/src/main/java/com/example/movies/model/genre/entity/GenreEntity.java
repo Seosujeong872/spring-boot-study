@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="`genre`")
+@Table(name="GENRE")
 @Getter
 @Builder
 @AllArgsConstructor

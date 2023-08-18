@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`movie`")
+@Table(name = "MOVIE")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -46,7 +46,7 @@ public class MovieEntity {
     @Column(name = "movie_time")
     private Integer movieTime;
 
-    @Column(name = "summary", nullable = false)
+    @Column(name = "summary", length = 100000000, nullable = false)
     private String summary;
 
     @Column(name = "movie_url")

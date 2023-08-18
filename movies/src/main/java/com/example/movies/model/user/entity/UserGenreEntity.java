@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`user_genre_mapping`")
+@Table(name = "USER_GENRE_MAPPING")
 @Getter
 @Builder
 @AllArgsConstructor

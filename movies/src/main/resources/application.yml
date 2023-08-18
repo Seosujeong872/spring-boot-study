@@ -1,14 +1,30 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/movies
-    username: root
-    password: 1234
+   # TODO : 테스트 디비 / 실 디비 구분
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    # url: jdbc:mariadb://localhost:3306/movies
+    # username: root
+    # password: 1234
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  sql:
+    init:
+      encoding: UTF-8
+#      schema-locations: classpath:h2/schema.sql
+      dataLocations: classpath:h2/data.sql
+      mode: always
   jpa:
     defer-datasource-initialization: true
     open-in-view: false
-    database-platform: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    # database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
-      ddl-auto: none # create-drop, update, validate, none
+      ddl-auto: create # create-drop, update, validate, none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
