@@ -8,11 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
+@ToString
 public class ResMoviePageDTO {
 
     private List<Movie> movieList;
@@ -38,6 +40,7 @@ public class ResMoviePageDTO {
 
        public static Movie fromEntity(MovieEntity movieEntity){
             return Movie.builder()
+            .idx(movieEntity.getIdx())
             .movieName(movieEntity.getMovieName())
             .poster(movieEntity.getPoster())
             .movieDate(movieEntity.getMovieDate())

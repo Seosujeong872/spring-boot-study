@@ -35,28 +35,31 @@
             <h1>관리자 페이지 </h1>
           </div>
           <div>
+            d
+          </div>
+          <div>
             <table class="table table-dark table-hover">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">제목</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                  <tr th:each="dto : ${dto.movieList}">
+                    <th scope="row">[[${dto.idx}]]</th>
+                    <td>[[${dto.movieName}]]</td>
+                    <td><button type="button" class="btn btn-secondary">수정</button></td>
+                    <td><button type="button" class="btn btn-outline-secondary">삭제</button></td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <th scope="row">2</th>
                     <td>Jacob</td>
                     <td>Thornton</td>
                     <td><button type="button" class="btn btn-secondary">Secondary</button></td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <td><button type="button" class="btn btn-secondary">Secondary</button></td> 
                   </tr>
