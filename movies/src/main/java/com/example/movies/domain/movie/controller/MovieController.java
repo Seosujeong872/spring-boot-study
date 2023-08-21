@@ -36,5 +36,13 @@ public class MovieController {
         modelAndView.setViewName("movie/recommend");
         return modelAndView;
     }
+
+    @GetMapping("/main/movie-details")
+    public ModelAndView MovieDetails(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("movie/movieDetailsPage");
+        return modelAndView;
+
+    }
     
 }
