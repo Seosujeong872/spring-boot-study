@@ -77,3 +77,8 @@ footer {
   border: 1px solid #ccc;
   padding: 10px;
 }
+
+.movieContainer {
+  display: flex;
+  align-items: center;
+}
