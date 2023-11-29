@@ -37,6 +37,22 @@
     </div>
     <div>dd</div>
     <div>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="/main">홈</a></li>
+          <li>랭킹</li>
+          <li><a href="/main/movie">영화</a></li>
+          <li th:if="${session.role == 'ADMIN'}">
+            <a th:href="@{/admin}">관리자 메뉴</a>
+          </li>
+          <li th:if ="${session.role == 'USER'}">
+            <a th:href="@{/main/recommend}">추천</a>
+            
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div>
       <h1>관리자 페이지 </h1>
     </div>
     <div>

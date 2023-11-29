@@ -69,10 +69,13 @@
         <span>영화 넣을 자리 </span>
         <ul class="movieList">
             <li th:each=" dto: ${dto.movieList}">
+              <a th:href="@{/main/movie-details/{movieIdx}(movieIdx=${dto.idx})}">
                 <span th:text="${dto.movieName}"></span>
                 <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.poster}}"  alt="Poster"
                 width="200"
                 height="300">
+              </a> 
+             
             </li>
             
             
