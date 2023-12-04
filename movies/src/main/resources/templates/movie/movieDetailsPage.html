@@ -73,16 +73,29 @@
       </div>
       <div class="movieDetails">
         <div class="movie-poster">
-          <img>
-          <h2>하잉ㅇ</h2>
+          <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.poster}}"  alt="Poster"
+                width="200"
+                height="300">
+          <!-- <h2>하잉ㅇ</h2> -->
         </div>
         <div class="movie-info">
-          <div>제목</div>
-          <div>개봉일</div>
-          <div>등급</div>
+          <div>제목
+            <span th:text="${dto.movieName}"></span>
+          </div>
+          <div>개봉일
+            <span th:text="${dto.movieDate}"></span>
+          </div>
+          <div>등급
+            <span th:text="${dto.grade}"></span>
+          </div>
           <div>장르</div>
           <div>러닝타임</div>
-          <div>국가</div>
+          <div>국가
+            <span th:text="${dto.country}"></span>
+          </div>
+          <div>줄거리
+            <span th:text="${dto.summary}"></span>
+          </div>
           <div>평점</div>
           <div>♡</div>
 

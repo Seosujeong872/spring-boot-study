@@ -14,9 +14,9 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
-    
+
     @GetMapping("/main/movie")
-    public ModelAndView Movie(){
+    public ModelAndView Movie() {
         ModelAndView modelAndView = new ModelAndView();
 
         // movieService 사용하여 영화 정보 가져옴.
@@ -25,27 +25,30 @@ public class MovieController {
         // 가져온 영화 정보를 dto 라는 이름으로 뷰에 전달.
         modelAndView.addObject("dto", moviePageDTO);
 
-
         modelAndView.setViewName("movie/moviePage");
         return modelAndView;
     }
-    
+
     @GetMapping("/main/recommend")
-    public ModelAndView Recommend(){
+    public ModelAndView Recommend() {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("movie/recommend");
         return modelAndView;
     }
 
+    // 영화상세페이지
     @GetMapping("/main/movie-details/{movieIdx}")
-    public ModelAndView MovieDetails(@PathVariable Long movieIdx){
+    public ModelAndView MovieDetails(@PathVariable Long movieIdx) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //movieService 사용하여 영화 정보 가져오기
+        ResMoviePageDTO.Movie movieDetailsDTO = movieService.getMovieDetails(movieIdx);
+        modelAndView.addObject("dto", movieDetailsDTO);
+        
         modelAndView.setViewName("movie/movieDetailsPage");
         return modelAndView;
 
     }
 
- 
-    
 }
